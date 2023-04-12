@@ -14,14 +14,14 @@ export default function App() {
     const nextItems = items.filter((item) => item.id !== id);
     setItems(nextItems);
   };
-  const handleLoad = async () => {
-    const { foods } = await getFoods();
+  const handleLoad = async (orderQuery) => {
+    const { foods } = await getFoods(orderQuery);
     setItems(foods);
   };
 
   useEffect(() => {
-    handleLoad();
-  }, []);
+    handleLoad(order);
+  }, [order]);
 
   return (
     <div className="">

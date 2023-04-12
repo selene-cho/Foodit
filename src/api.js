@@ -3,8 +3,9 @@
  */
 
 // foods GET 해오는 함수
-export async function getFoods() {
-  const response = await fetch('https://learn.codeit.kr/0529/foods');
+export async function getFoods(order = 'createdAt') {
+  const query = `order=${order}`;
+  const response = await fetch(`https://learn.codeit.kr/0529/foods?${query}`);
   const body = await response.json();
   return body;
 }
