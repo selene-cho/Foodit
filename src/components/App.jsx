@@ -8,6 +8,7 @@ export default function App() {
   const [cursor, setCursor] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingError, setLoadingError] = useState(null);
+  const [search, setSearch] = useState('');
 
   const sortedItems = items.sort((a, b) => b[order] - a[order]);
 
@@ -41,15 +42,23 @@ export default function App() {
     setCursor(nextCursor);
   };
   const handleLoadMore = () => {
-    handleLoad({ order, cursor });
+    handleLoad({ order, cursor, search }); // '더보기' 버튼 눌렀을 때, 검색어 함께 요청되도록 search 추가
+  };
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    setSearch(e.target['search'].value);
   };
 
   useEffect(() => {
-    handleLoad({ order });
-  }, [order]);
+    handleLoad({ order, search }); // handleLoad에 전달할 옵션 값으로 order, search
+  }, [order, search]);
 
   return (
     <div className="">
+      <form onSubmit={handleSearchSubmit}>
+        <input name="search" />
+        <button type="submit">검색</button>
+      </form>
       <button onClick={handleNewestClick}>최신순</button>
       <button onClick={handleCalorieClick}>칼로리순</button>
       <FoodList items={sortedItems} onDelete={handleDelete} />
