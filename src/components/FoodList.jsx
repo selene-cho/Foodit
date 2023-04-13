@@ -1,4 +1,5 @@
 import FoodListItem from './FoodListItem';
+import './FoodList.css';
 
 export default function FoodList({ items, onDelete }) {
   return (
