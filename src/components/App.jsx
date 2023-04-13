@@ -23,7 +23,7 @@ export default function App() {
     if (options.offset === 0) {
       setItems(foods);
     } else {
-      setItems([...items, ...foods]);
+      setItems((prevItems) => [...prevItems, ...foods]);
     }
     setOffset(options.offset + foods.length);
     setHasNext(paging.hasNext);
@@ -41,9 +41,7 @@ export default function App() {
       <button onClick={handleNewestClick}>최신순</button>
       <button onClick={handleCalorieClick}>칼로리순</button>
       <FoodList items={sortedItems} onDelete={handleDelete} />
-      <button disabled={!hasNext} onClick={handleLoadMore}>
-        더보기
-      </button>
+      {hasNext && <button onClick={handleLoadMore}>더보기</button>}
     </div>
   );
 }
