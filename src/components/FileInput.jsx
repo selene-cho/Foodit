@@ -33,7 +33,8 @@ export default function FileInput({ name, onChange, type, value }) {
 
   return (
     <div>
-      <img src={preview} accept="image/png, image/jpeg" alt="이미지 미리보기" />
+      <img src={preview} accept="image/png, image/jpeg" alt="이미지 미리보기" />{' '}
+      {/* image 파일만 받도록 accept 추가 */}
       <input type={type} onChange={handleChange} ref={inputRef} />
       {value && <button onClick={handleClearClick}>X</button>}
     </div>
