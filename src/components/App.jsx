@@ -15,10 +15,12 @@ export default function App() {
 
   const handleNewestClick = () => setOrder('createdAt');
   const handleCalorieClick = () => setOrder('calorie');
+
   const handleDelete = (id) => {
     const nextItems = items.filter((item) => item.id !== id);
     setItems(nextItems);
   };
+
   const handleLoad = async (options) => {
     let result;
     try {
@@ -45,9 +47,14 @@ export default function App() {
   const handleLoadMore = () => {
     handleLoad({ order, cursor, search }); // '더보기' 버튼 눌렀을 때, 검색어 함께 요청되도록 search 추가
   };
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     setSearch(e.target['search'].value);
+  };
+
+  const handleSubmitSuccess = (food) => {
+    setItems((prevItems) => [food, ...prevItems]);
   };
 
   useEffect(() => {
@@ -62,7 +69,7 @@ export default function App() {
       </form>
       <button onClick={handleNewestClick}>최신순</button>
       <button onClick={handleCalorieClick}>칼로리순</button>
-      <FoodForm />
+      <FoodForm onSubmitSuccess={handleSubmitSuccess} />
       <FoodList items={sortedItems} onDelete={handleDelete} />
       {cursor && (
         <button disabled={isLoading} onClick={handleLoadMore}>
