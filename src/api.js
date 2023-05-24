@@ -22,7 +22,7 @@ export async function getFoods({
 
 // Food 데이터를 추가하는 함수
 export async function createFood(formData) {
-  const response = fetch(`${BASE_URL}/foods`, {
+  const response = await fetch(`${BASE_URL}/foods`, {
     method: 'POST',
     body: formData,
   });

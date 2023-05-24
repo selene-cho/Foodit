@@ -62,14 +62,14 @@ export default function App() {
   }, [order, search]);
 
   return (
-    <div className="">
+    <div>
+      <FoodForm onSubmitSuccess={handleSubmitSuccess} />
       <form onSubmit={handleSearchSubmit}>
         <input name="search" />
         <button type="submit">검색</button>
       </form>
       <button onClick={handleNewestClick}>최신순</button>
       <button onClick={handleCalorieClick}>칼로리순</button>
-      <FoodForm onSubmitSuccess={handleSubmitSuccess} />
       <FoodList items={sortedItems} onDelete={handleDelete} />
       {cursor && (
         <button disabled={isLoading} onClick={handleLoadMore}>

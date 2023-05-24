@@ -4,37 +4,36 @@ import FileInput from './FileInput';
 import { createFood } from '../api';
 
 const INITIAL_VALUES = {
+  imgFile: null,
   title: '',
   calorie: 0,
   content: '',
-  imgFile: null,
 };
+
+function sanitize(type, value) {
+  switch (type) {
+    case 'number':
+      return Number(value) || 0;
+
+    default:
+      return value;
+  }
+}
 
 export default function FoodForm({ onSubmitSuccess }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittingError, setSubmittingError] = useState(null);
   const [values, setValues] = useState(INITIAL_VALUES);
 
-  function sanitize(value, type) {
-    switch (
-      type // input이 숫자형일 때만 따로 처리
-    ) {
-      case 'number':
-        return Number(value) || 0;
-
-      default:
-        return value;
-    }
-  }
-  const handleChange = (name, value, type) => {
+  const handleChange = (name, value) => {
     setValues((prevValues) => ({
       ...prevValues,
-      [name]: sanitize(value, type),
+      [name]: value,
     }));
   };
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
-    handleChange(name, value, type);
+    handleChange(name, sanitize(type, value));
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,7 +62,6 @@ export default function FoodForm({ onSubmitSuccess }) {
   return (
     <form className="FoodForm" onSubmit={handleSubmit}>
       <FileInput
-        type="file"
         name="imgFile"
         value={values.imgFile}
         onChange={handleChange}
